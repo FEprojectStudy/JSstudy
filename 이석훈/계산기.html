@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>텐키리스 계산기</title>
+    <style>
+    body{font-size: 0px;}
+    *{box-sizing: border-box; margin: 0 0 0 0;}
+    span{display:inline-block;width: 30px; height: 30px; background-color: cornsilk;text-align: center; font-size: 20px; margin:0 1px 0 0;}
+    #cal{width: 30px;height: 30px; text-align: center;}
+    #calOutput{width: 92px;height: 30px; margin-left: 1px;}
+    .keyIn{background-color: burlywood;}
+    .row{margin:1px 0 1px 0}
+    .explainRow{font-size: 10px;}
+    </style>
+</head>
+<body>
+    <div class="row">
+        <input readonly id="cal" />
+        <input readonly id="calOutput" />
+    </div>
+        <div class="row">
+        <span id="u">1</span>
+        <span id="i">2</span>
+        <span id="o">3</span>
+        <span id="p">+</span>
+    </div>
+    <div class="row">
+        <span id="j">4</span>
+        <span id="k">5</span>
+        <span id="l">6</span>
+        <span id="[">-</span>
+    </div>
+    <div class="row">
+        <span id="m">7</span>
+        <span id=",">8</span>
+        <span id=".">9</span>
+        <span id=";">*</span>
+    </div>
+    <div class="row">
+        <span id="/">0</span>
+        <span id="n">.</span>
+        <span id="'">/</span>
+        <span id="]">=</span>
+    </div>
+
+  
+    </body>
+    <script>
+        //연산자, 계산값을 변수로 할당
+        //ammd = add multiply minus divide 줄임말
+        let firstNum =''
+        let secNum = ''
+        let result =''
+        let ammd = ''
+       const $cal = document.querySelector('#cal')
+       const $calOutput = document.querySelector('#calOutput')
+       //연산자는 따로 표시되도록 변수 할당
+       const howtoCal = ["p","[",";","'"];
+
+        //키 입력시의 효과 함수 지정(value 창에 뜨게 하기, 값 변수에 저장하기)
+
+
+        // function removeClass(key) {
+        //     document.getElementById(key.key).classList.remove('keyIn')
+        // }
+       const thisKeydown = (e) =>{
+        const key = document.getElementById(e.key);
+        if(key && !(firstNum === '' && howtoCal.includes(e.key))) key.classList.add("keyIn")
+          //첫 숫자가 없이 부호만 누르면 애초에 keydown 이벤트인 classList.add 가 일어나지 않게 하기
+        if(firstNum === '' && howtoCal.includes(e.key)){
+            $cal.value = ''
+            ammd = ''
+            // removeClass(e)
+            //removeClass 함수가 안되는 이유? =>누를때의 이벤트이기 때문(뗄 때가 아니라)
+            alert("숫자를 먼저 입력해 주세요")
+
+        }else{
+            //나머지를 else로 분리해야 값이 초기화가 안되는 에러가 안생김
+        if(howtoCal.includes(e.key)){
+            $cal.value = document.querySelector('#'+'\\'+e.key).textContent
+            ammd = document.querySelector('#'+'\\'+e.key).textContent
+            $calOutput.value = ''
+        }else if(e.key !== ']'){
+            $calOutput.value +=document.querySelector('#'+'\\'+e.key).textContent
+            if(!ammd) {
+                firstNum = $calOutput.value
+    
+            }if(firstNum && ammd){
+                
+                secNum = $calOutput.value
+            }
+        }
+       
+
+        //선택된 연산자에 따른 결과값 계산방법
+        if(e.key === ']' && secNum){
+            $cal.value = document.querySelector('#'+'\\'+e.key).textContent
+            if(ammd === "+"){
+            result = Number(firstNum) + Number(secNum)
+            }else if(ammd === "-"){
+            result = Number(firstNum) - Number(secNum)
+            }else if(ammd === "/"){
+            result = Number(firstNum)/Number(secNum)
+            }else if(ammd === "*"){
+            result = Number(firstNum)*Number(secNum)}
+        
+        $calOutput.value = result
+        }
+    }
+            
+        }
+      
+        document.addEventListener('keydown', thisKeydown)
+    
+        document.addEventListener("keyup", (e)=>{
+        const key = document.getElementById(e.key);
+        if(key) {key.classList.remove("keyIn")}
+    });
+     </script>
+
+</html>
