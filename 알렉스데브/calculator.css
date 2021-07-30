@@ -1,0 +1,34 @@
+.calculator {
+  text-align: center;
+  padding: 5px 2px 5px 2px;
+}
+
+.screen {
+  border: black solid 1px;
+  border-radius: 3px;
+  background-color: black;
+  color: white;
+  margin: 3px 3px 3px 3px;
+}
+
+h3 {
+  text-align: center;
+}
+
+.calculator {
+  margin: auto;
+  border: black solid 1px;
+  border-radius: 3px;
+  background-color: gainsboro;
+  flex-wrap: wrap;
+  width: 10rem;
+}
+
+.calculator > .buttons {
+  margin: auto;
+  align-items: center;
+}
+
+button {
+  border-radius: 3px;
+}
