@@ -9,17 +9,16 @@ let $operator_txt = document.querySelector('#operator_txt');
 let $answer_txt = document.querySelector('#answer_txt');
 let $btn = document.querySelectorAll('button');
 
-function sum(a, b) {
-  return a + b;
-}
-function sub(a, b) {
-  return a - b;
-}
-function mul(a, b) {
-  return a * b;
-}
-function div(a, b) {
-  return a / b;
+function operate(op, numOne, numTwo) {
+  if (op === '+') {
+    return numOne + numTwo;
+  } else if (op === '-') {
+    return numOne - numTwo;
+  } else if (op === '*') {
+    return numOne * numTwo;
+  } else if (op === '/') {
+    return numOne / numTwo;
+  }
 }
 
 function onClick(event) {
@@ -31,15 +30,7 @@ function onClick(event) {
 
     // 누른 버튼이 '=' 이면
   } else if (event.target.textContent === '=') {
-    if (operator === '+') {
-      answer = sum(numOne, numTwo);
-    } else if (operator === '-') {
-      answer = sub(numOne, numTwo);
-    } else if (operator === '*') {
-      answer = mul(numOne, numTwo);
-    } else if (operator === '/') {
-      answer = div(numOne, numTwo);
-    }
+    answer = operate(operator, numOne, numTwo);
     $answer_txt.textContent = answer;
     numOne = '';
     numTwo = '';
