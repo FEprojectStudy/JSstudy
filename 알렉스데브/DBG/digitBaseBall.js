@@ -1,12 +1,14 @@
 // 숫자 30이 넘어가면 CS 알고리즘으로 문제를 푸는 것이 더 효율적
 // math.random은 암호학적으로 완전한 무작위가 아니기 때문에
-// 보안과 관ㄹ현된 작업은 window.crypto.getRandomValues() 함수를 쓰는 편이 안전하다.
+// 보안과 관련된 작업은 window.crypto.getRandomValues() 함수를 쓰는 편이 안전하다.
 
 // Arrays : Digit Containers
 const target = [];
 const numbers = [];
 const answer = [];
 const tries = [];
+
+// Variable : Counter
 let outCnt = 0;
 
 // Tags
@@ -23,7 +25,7 @@ for (let i = 0; i < 4; i++) {
   target.push(numbers[idx]);
   numbers.splice(idx, 1);
 }
-console.log(target);
+//console.log(target);
 
 function chkInput(input) {
   // 길이 체크
@@ -47,23 +49,15 @@ function chkInput(input) {
 }
 
 function chkOut(inputValue, strike, ball) {
-  if (strike > 0 || ball > 0) {
-    $log.append(
-      `${inputValue}: ${strike} Strikes ${ball} Balls`,
-      document.createElement('br')
-    );
-    //숫자를 하나도 못 맞출 경우: Out 게임 종료.
-  } else {
+  //숫자를 하나도 못 맞출 경우: Out 게임 종료.
+  if (strike === 0 && ball === 0) {
     outCnt++;
-    $log.append(
-      `${inputValue}: ${strike} Strikes ${ball} Balls`,
-      document.createElement('br')
-    );
+    $log.append(`${inputValue}: ${outCnt} Out!`, document.createElement('br'));
     if (outCnt >= 3) {
       $log.append(`Three Out! The Answer was ${target.join('')}`);
     }
   }
-  console.log(`outCnt: ${outCnt}`);
+  //console.log(`outCnt: ${outCnt}`);
 }
 
 function chkSnB(inputValue, target) {
@@ -82,6 +76,13 @@ function chkSnB(inputValue, target) {
         ball++;
       }
     }
+  }
+  if (strike > 0 || ball > 0) {
+    // 스트라이크 & 볼 메시지 출력
+    $log.append(
+      `${inputValue}: ${strike} Strikes ${ball} Balls`,
+      document.createElement('br')
+    );
   }
   chkOut(inputValue, strike, ball);
   // append의 경우: createTextNode 함수를 써서 생성할 필요 없이 바로 문자열을 추가하고, 복수(태그 포함)를 추가할 수 있도록 발전.
@@ -121,7 +122,7 @@ function onSubmit(event) {
 
   // 시도한 숫자 배열에 추가
   tries.push(inputValue);
-  console.log(tries);
+  //console.log(tries);
   //검사하는 코드 : 복잡한 것은 함수로 빼기 (리팩토링)
 }
 
