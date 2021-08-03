@@ -1,0 +1,23 @@
+body {
+  margin-top: 8rem;
+  text-align: center;
+}
+h1 {
+  color: antiquewhite;
+}
+
+.log {
+  margin: 0.5rem;
+  color: antiquewhite;
+}
+
+img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: -1;
+  animation: fadeIn 0.5s linear;
+  filter: brightness(65%);
+}
