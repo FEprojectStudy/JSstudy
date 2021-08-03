@@ -7,6 +7,7 @@ const target = [];
 const numbers = [];
 const answer = [];
 const tries = [];
+let outCnt = 0;
 
 // Tags
 const $answer = document.querySelector('#answer');
@@ -45,9 +46,30 @@ function chkInput(input) {
   return true;
 }
 
+function chkOut(inputValue, strike, ball) {
+  if (strike > 0 || ball > 0) {
+    $log.append(
+      `${inputValue}: ${strike} Strikes ${ball} Balls`,
+      document.createElement('br')
+    );
+    //숫자를 하나도 못 맞출 경우: Out 게임 종료.
+  } else {
+    outCnt++;
+    $log.append(
+      `${inputValue}: ${strike} Strikes ${ball} Balls`,
+      document.createElement('br')
+    );
+    if (outCnt >= 3) {
+      $log.append(`Three Out! The Answer was ${target.join('')}`);
+    }
+  }
+  console.log(`outCnt: ${outCnt}`);
+}
+
 function chkSnB(inputValue, target) {
   let strike = 0;
   let ball = 0;
+  let outCnt = 0;
   for (let i = 0; i < target.length; i++) {
     // 일치하는 것이 없다면 -1, 있다면 0 이상
     const index = inputValue.indexOf(target[i]);
@@ -61,18 +83,9 @@ function chkSnB(inputValue, target) {
       }
     }
   }
+  chkOut(inputValue, strike, ball);
   // append의 경우: createTextNode 함수를 써서 생성할 필요 없이 바로 문자열을 추가하고, 복수(태그 포함)를 추가할 수 있도록 발전.
   // 대부분의 경우 append를 활용.
-
-  if (strike > 0 || ball > 0) {
-    $log.append(
-      `${inputValue}: ${strike} Strikes ${ball} Balls`,
-      document.createElement('br')
-    );
-    //숫자를 하나도 못 맞출 경우: Out 게임 종료.
-  } else {
-    $log.append(`Out! The Answer was ${target.join('')}`);
-  }
 }
 
 function onSubmit(event) {
