@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>한글야구</title>
+</head>
+<body>
+    <div id="inputText"></div>
+    <button id="hintBtn">힌트</button>
+    <div id="hintTxt"></div>
+    <form id="tryTxt">
+        <input type="text" id ='input'></input>
+        <button>제출</button>
+    </form>
+    <div id="output"></div>
+  
+
+    <script>
+        //문제 생성
+        let ansText = prompt("문제로 낼 단어를 알려주세요.");
+        //아무런 입력값이 없는 경우
+        if(!ansText){
+         ansText = prompt("문제로 낼 단어를 다시 알려주세요.");
+        }
+        let ansCount = 0;
+        let $inputText = document.querySelector("#inputText");
+        let $hintTxt = document.querySelector("#hintTxt");
+        let $tryTxt = document.querySelector('#tryTxt');
+        let $output = document.querySelector('#output');
+      
+
+     
+        //자모음 분리
+        function getConstantVowel(kor) {
+            const f = ['ㄱ', 'ㄲ', 'ㄴ', 'ㄷ', 'ㄸ', 'ㄹ', 'ㅁ',
+                    'ㅂ', 'ㅃ', 'ㅅ', 'ㅆ', 'ㅇ', 'ㅈ', 'ㅉ',
+                    'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ'];
+            const s = ['ㅏ', 'ㅐ', 'ㅑ', 'ㅒ', 'ㅓ', 'ㅔ', 'ㅕ',
+                    'ㅖ', 'ㅗ', 'ㅘ', 'ㅙ', 'ㅚ', 'ㅛ', 'ㅜ',
+                    'ㅝ', 'ㅞ', 'ㅟ', 'ㅠ', 'ㅡ', 'ㅢ', 'ㅣ'];
+            const t = ['', 'ㄱ', 'ㄲ', 'ㄳ', 'ㄴ', 'ㄵ', 'ㄶ',
+                    'ㄷ', 'ㄹ', 'ㄺ', 'ㄻ', 'ㄼ', 'ㄽ', 'ㄾ',
+                    'ㄿ', 'ㅀ', 'ㅁ', 'ㅂ', 'ㅄ', 'ㅅ', 'ㅆ',
+                    'ㅇ', 'ㅈ', 'ㅊ', 'ㅋ', 'ㅌ', 'ㅍ', 'ㅎ'];
+
+            const ga = 44032;
+            let uni = kor.charCodeAt(0);
+
+            uni = uni - ga;
+
+            let fn = parseInt(uni / 588);
+            let sn = parseInt((uni - (fn * 588)) / 28);
+            let tn = parseInt(uni % 28);
+
+            return {
+                f: f[fn],
+                s: s[sn],
+                t: t[tn]
+            };
+        };
+      
+
+        //힌트 버튼 클릭시 이벤트
+        const showHint = () =>{
+            //제출 횟수로 세기
+            ansCount += 1;
+            if(ansCount >= 5){
+              alert("패배하였습니다");
+          }
+            
+            const wordIndex = Math.floor(Math.random()*ansText.length)
+            if(document.getElementById('hintTxt').textContent !== ""){
+                document.getElementById('hintTxt').textContent = ""
+            }else{
+            }
+            $hintTxt.append(`${ansText[Number(wordIndex)]}`,document.createElement("br"))
+           
+     
+         
+        }
+        
+
+
+
+        //처음 자음만 보이게 하기
+        //분리된 자모음을 object로 저장
+        const divideTxt = [];
+        for(let i=0;i<ansText.length;i++){
+            divideTxt.push(getConstantVowel(ansText[i]).f)
+        }
+        $inputText.append(`${divideTxt}`,document.createElement('br'))
+
+        document.getElementById('hintBtn').addEventListener('click',showHint)
+        
+        //답안 제출
+        $tryTxt.addEventListener('submit',(e)=>{
+          //제출 횟수 세기
+          ansCount += 1;
+          if(ansCount >= 5){
+              alert("패배하였습니다");
+          }
+            e.preventDefault();
+            //.textContent가 아닌 .value를 써야함
+            const tryAns = document.querySelector('#input').value;
+          
+               //제출한 답과 비교
+               let correctTxt = 0;
+                let wrongTxt = 0;
+                //for 문이 else안에 들어가면 안됨. 왜그러지?
+                for(let j=0;j<ansText.length;j++){
+                    if(ansText[j]===tryAns[j]){
+                        correctTxt += 1;
+                    }else{
+                        wrongTxt +=1;
+                    }
+                }
+            if(tryAns === ansText){
+            alert("정답입니다!")
+            $output ='';
+            }else{
+                $output.append(`맞은 글자 ${correctTxt}, 틀린 글자 ${wrongTxt}`,document.createElement('br'))
+               
+            }
+        })
+     
+
+
+
+    </script>
+</body>
+</html>
