@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Digit Baseball</title>
+    <link rel="stylesheet" href="digitBaseBall.css" />
+  </head>
+  <body>
+    <h1>Digit Baseball</h1>
+    <!--버튼 태그가 있는 input이 있다면 form으로 감싸주는 것이 웹 표준-->
+    <form id="form">
+      <!-- HTML로 조건을 검사할 수 있으나 요즘은 잘 안 쓰는 추세: 디자인을 적용하기 어려움-->
+      <input type="text" id="answer" />
+      <button>Enter</button>
+    </form>
+    <div id="log" class="log"></div>
+    <img src="img/baseBallField.jpg" alt="baseBallField" />
+    <script src="digitBaseBall.js"></script>
+  </body>
+</html>
