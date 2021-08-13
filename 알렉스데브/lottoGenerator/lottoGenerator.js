@@ -41,7 +41,7 @@ function generateNum() {
   for (let i = 0; i < lottoBalls.length; i++) {
     setTimeout(() => {
       const $ball = document.createElement('div');
-      $ball.className = 'ball';
+      $ball.className = 'ball' + String(i + 1);
       $ball.textContent = lottoBalls[i];
       $ballScreen.appendChild($ball);
     }, 1000 * (i + 1));
@@ -49,7 +49,7 @@ function generateNum() {
 
   setTimeout(() => {
     const $bonusNum = document.createElement('div');
-    $bonusNum.className = 'ball';
+    $bonusNum.className = 'ball7';
     $bonusNum.textContent = bonusNum;
     $bonusBall.appendChild($bonusNum);
   }, 7000);
