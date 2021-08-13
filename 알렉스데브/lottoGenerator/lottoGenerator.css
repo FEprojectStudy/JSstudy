@@ -2,7 +2,92 @@
   display: none;
 }
 
-.ball {
+.ball1 {
+  display: inline-block;
+  border: 1px solid black;
+  border-radius: 20px;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  font-size: 20px;
+  text-align: center;
+  margin-right: 20px;
+}
+
+.ball1 {
+  background-color: red;
+  display: inline-block;
+  border: 1px solid black;
+  border-radius: 20px;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  font-size: 20px;
+  text-align: center;
+  margin-right: 20px;
+}
+.ball2 {
+  background-color: blue;
+  display: inline-block;
+  border: 1px solid black;
+  border-radius: 20px;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  font-size: 20px;
+  text-align: center;
+  margin-right: 20px;
+}
+.ball3 {
+  background-color: purple;
+  display: inline-block;
+  border: 1px solid black;
+  border-radius: 20px;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  font-size: 20px;
+  text-align: center;
+  margin-right: 20px;
+}
+.ball4 {
+  background-color: yellow;
+  display: inline-block;
+  border: 1px solid black;
+  border-radius: 20px;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  font-size: 20px;
+  text-align: center;
+  margin-right: 20px;
+}
+.ball5 {
+  background-color: teal;
+  display: inline-block;
+  border: 1px solid black;
+  border-radius: 20px;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  font-size: 20px;
+  text-align: center;
+  margin-right: 20px;
+}
+.ball6 {
+  background-color: green;
+  display: inline-block;
+  border: 1px solid black;
+  border-radius: 20px;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  font-size: 20px;
+  text-align: center;
+  margin-right: 20px;
+}
+.ball7 {
+  background-color: pink;
   display: inline-block;
   border: 1px solid black;
   border-radius: 20px;
