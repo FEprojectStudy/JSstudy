@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rock-paper-scissors</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <div>
+        <h1>가위바위보 게임</h1>
+    </div>
+    <div id="ai">
+        <img src="image/rock.png"/>
+        <img src="image/paper.png"/>
+        <img src="image/scissor.png"/>
+    </div>
+    <div>
+        <input type="button" id="rock" value="rock"/>
+        <input type="button" id="paper" value="paper"/>
+        <input type="button" id="scissor" value="scissor"/>
+    </div>
+    <div>
+        <span id="result"></span>
+        <input type="button" id="regame"/>
+    </div>
+    <script>
+        let res = Math.floor(Math.random() * 3);
+        let me = 0;
+        for(let i=0;i<3;i++){
+            if(res==0){
+                console.log("가위");
+            }
+            else if(res==1){
+                console.log("바위");
+            }
+            else if(res==2){
+                console.log("보");
+            }
+        }
+    </script>
+</body>
+</html>
