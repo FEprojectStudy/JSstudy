@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>주식투자</title>
+    <style>
+        #chartBox{
+            display: inline-block;
+            width: 200px;
+            height: 200px;
+        }
+        #firstChart,#secondChart{
+            position: relative;
+            display: inline-block;
+            width: 100px;
+            height: 200px;
+        }
+        #FirUp,#SecUp{
+            width: 100px;
+            height: 100px;
+            background-color: rgb(245, 91, 91);
+        }
+        #FirDn,#SecDn{
+            position: relative;
+            top: 100px;
+            width: 100px;
+            height: 100px;
+            background-color: rgb(63, 142, 245);
+        }
+    </style>
+</head>
+<body>
+    <div>지금 얼마?</div>
+    <div id="nowValue"></div>
+    <div>
+        <span id="chartBox"><span id="firstChart"><div id="FirUp"></div></span><span id="secondChart"><div id="SecDn"></div></span>
+        </span>
+    </div>
+    <button id="buyBtn">사자</button>
+    <button id="sellBtn">팔자</button>
+    <div>남은 금액 : <span id="money"></span></div>
+    <div>보유 주식 : <span id="stock"></span></div>
+    <script>
+        //현재 화면에 보여지는 주식값을 저장하는 array 생성
+        const twoVal = Array(2).fill().map((a,i)=>i+1)
+        //현재가,남은금액, 보유주식 초기값 설정
+        let totalVal = 0;
+        let leftMoney = 100;
+        let leftStock = 0;
+        document.getElementById("money").textContent = leftMoney
+        document.getElementById("stock").textContent = leftStock
+        document.getElementById("buyBtn").addEventListener("click",()=>{
+            //현재가보다 잔고가 적은 경우, 살수 없음
+            if(leftMoney < totalVal){
+                alert('살수 없습니다')
+                leftStock = leftStock
+                leftMoney = leftMoney
+                //구입한 경우 잔고에서 현재가를 빼고, 보유주식을 1추가
+            }else{
+                leftMoney = leftMoney-totalVal
+                leftStock += 1;
+            }
+            document.getElementById("money").textContent = leftMoney
+            document.getElementById("stock").textContent = leftStock
+
+        })
+
+        document.getElementById("sellBtn").addEventListener("onmouseup",()=>{
+        })
+
+        document.getElementById("sellBtn").addEventListener("click",()=>{
+            //남은 주식이 0일 경우 판매가 안됨
+            if(leftStock === 0){
+                alert('팔수 없습니다')
+                leftStock = 0
+                leftMoney = leftMoney
+            //팔때 잔고가 200이 넘어가면 승리
+            }else if(leftMoney + totalVal >200){
+                leftMoney = leftMoney+totalVal
+                leftStock -= 1;
+            alert("승리하셨습니다")
+            clearInterval(repeat);
+             //주식을 팔면 수량이 1감소하고, 현재가만큼 잔고가 추가됨
+            }else{
+                leftMoney = leftMoney+totalVal
+                leftStock -= 1;
+            }
+            document.getElementById("money").textContent = leftMoney
+            document.getElementById("stock").textContent = leftStock
+
+        })
+        
+        const repeat = setInterval(()=>{
+            let POne = document.getElementById("firstChart")
+            let PTwo = document.getElementById("secondChart")
+         
+            //+,-부호 랜덤으로 설정
+            let PM = 1;
+            if(Math.random()<0.5){
+                PM = PM*(-1)
+            }
+            //현재의 가격은 -9~+9 사이에서 변동이 일어남
+            const nowCost = Math.floor(Math.random()*10+1)*(PM);
+            twoVal.push(nowCost);
+            twoVal.shift()
+            //twoVal을 밖으로 꺼내면 값이 나오지 않는 이유?
+            //한번만 랜더링되기 때문
+            //가격이 올라가면 빨간색, 내려가면 파란색
+            //이전의 값은 왼쪽으로 밀려남
+            if(twoVal[0]>0 && document.getElementById("FirDn")){
+                let P = document.getElementById("FirDn");
+                P.id = "FirUp"
+            }else if(twoVal[0]<0 && document.getElementById("FirUp")){
+                let P = document.getElementById("FirUp");
+                P.id = "FirDn"
+            }
+            if(twoVal[1]>0 && document.getElementById("SecDn")){
+                let P = document.getElementById("SecDn");
+                P.id = "SecUp"
+            }else if(twoVal[1]<0 && document.getElementById("SecUp")){
+                let P = document.getElementById("SecUp");
+                P.id = "SecDn"
+            }
+            //음수로 내려가지 않게 만들기
+            totalVal += twoVal[1]
+            if(totalVal<0){
+                totalVal = 0
+            }
+            document.getElementById("nowValue").textContent = totalVal  
+            
+            //승리하면 게임 중단
+           
+           
+           //1초마다 주식 가격 변경
+           },1000);
+
+    
+        
+    </script>
+</body>
+</html>
