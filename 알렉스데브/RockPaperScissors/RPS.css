@@ -1,0 +1,25 @@
+body {
+  text-align: center;
+  background-color: rgb(255, 234, 0);
+}
+
+#computer {
+  width: 181px;
+  height: 200px;
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#myHand {
+  width: 181px;
+  height: 200px;
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#score {
+  font-weight: bold;
+  font-size: medium;
+}

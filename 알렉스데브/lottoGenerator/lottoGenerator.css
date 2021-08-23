@@ -4,7 +4,6 @@
 
 .ball1 {
   display: inline-block;
-  border: 1px solid black;
   border-radius: 20px;
   width: 40px;
   height: 40px;
@@ -17,7 +16,6 @@
 .ball1 {
   background-color: red;
   display: inline-block;
-  border: 1px solid black;
   border-radius: 20px;
   width: 40px;
   height: 40px;
@@ -25,11 +23,11 @@
   font-size: 20px;
   text-align: center;
   margin-right: 20px;
+  box-shadow: 1px 1px 3px 1px #dadce0;
 }
 .ball2 {
   background-color: blue;
   display: inline-block;
-  border: 1px solid black;
   border-radius: 20px;
   width: 40px;
   height: 40px;
@@ -37,11 +35,11 @@
   font-size: 20px;
   text-align: center;
   margin-right: 20px;
+  box-shadow: 1px 1px 3px 1px #dadce0;
 }
 .ball3 {
   background-color: purple;
   display: inline-block;
-  border: 1px solid black;
   border-radius: 20px;
   width: 40px;
   height: 40px;
@@ -49,11 +47,11 @@
   font-size: 20px;
   text-align: center;
   margin-right: 20px;
+  box-shadow: 1px 1px 3px 1px #dadce0;
 }
 .ball4 {
   background-color: yellow;
   display: inline-block;
-  border: 1px solid black;
   border-radius: 20px;
   width: 40px;
   height: 40px;
@@ -61,11 +59,11 @@
   font-size: 20px;
   text-align: center;
   margin-right: 20px;
+  box-shadow: 1px 1px 3px 1px #dadce0;
 }
 .ball5 {
   background-color: teal;
   display: inline-block;
-  border: 1px solid black;
   border-radius: 20px;
   width: 40px;
   height: 40px;
@@ -73,11 +71,11 @@
   font-size: 20px;
   text-align: center;
   margin-right: 20px;
+  box-shadow: 1px 1px 3px 1px #dadce0;
 }
 .ball6 {
   background-color: green;
   display: inline-block;
-  border: 1px solid black;
   border-radius: 20px;
   width: 40px;
   height: 40px;
@@ -85,11 +83,11 @@
   font-size: 20px;
   text-align: center;
   margin-right: 20px;
+  box-shadow: 1px 1px 3px 1px #dadce0;
 }
 .ball7 {
   background-color: pink;
   display: inline-block;
-  border: 1px solid black;
   border-radius: 20px;
   width: 40px;
   height: 40px;
@@ -97,6 +95,7 @@
   font-size: 20px;
   text-align: center;
   margin-right: 20px;
+  box-shadow: 1px 1px 3px 1px #dadce0;
 }
 
 .bonusBall {
