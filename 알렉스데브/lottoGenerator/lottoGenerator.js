@@ -1,3 +1,4 @@
+
 let lottoBalls = [];
 let numbers = [];
 let bonusNum = 0;
