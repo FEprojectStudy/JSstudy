@@ -1,0 +1,19 @@
+#screen {
+  width: 300px;
+  height: 200px;
+  text-align: center;
+  user-select: none;
+}
+
+#screen.ready {
+  background-color: blue;
+  color: white;
+}
+
+#screen.set {
+  background-color: red;
+}
+
+#screen.go {
+  background-color: greenyellow;
+}
