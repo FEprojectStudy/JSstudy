@@ -36,8 +36,13 @@
 
       let startTime;
       let endTime;
+      const record = [];
 
       // 태그.classList.contains('클래스'); => 태그에 클래스가 포함되어 있는지 여부
+      // 태그.classList.add(''); =>추가
+      // 태그.classList.replace('기존클래스','수정클래스'); =>수정
+      // 태그.classList.remove('클래스'); => 제거
+
       $screen.addEventListener("click", (event) => {
         if (event.target.classList.contains("waiting")) {
           //파랑
@@ -58,17 +63,19 @@
         } else if (event.target.classList.contains("now")) {
           //초록
           endTime = new Date();
-          $result.textContent = `${endTime - startTime}ms`;
+
+          record.push(endTime - startTime);
+          const average = record.reduce((a, c) => a + c) / record.length;
+          $result.textContent = `현재:${
+            endTime - startTime
+          }ms, 평균:${average}ms`; //미래-현재
+          startTime = null;
+          endTime = null; //예전 값 방지
           $screen.classList.replace("now", "waiting");
-          // 시간 차이 저장하기
           $screen.textContent = "클릭해서 시작하세요.";
         } else {
         }
       });
-
-      // 태그.classList.add(''); =>추가
-      // 태그.classList.replace('기존클래스','수정클래스'); =>수정
-      // 태그.classList.remove('클래스'); => 제거
     </script>
   </body>
 </html>
