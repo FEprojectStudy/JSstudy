@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>halliGalli</title>
+    <style>
+      body {
+        font-size: 0px;
+        margin: 0 0 0 0;
+      }
+      #myCardName,
+      #computerCardName {
+        font-size: 15px;
+        position: relative;
+        display: inline-block;
+        width: 100px;
+        text-align: center;
+        margin-right: 10px;
+      }
+      #cards {
+        height: 150px;
+        width: 220px;
+        position: absolute;
+      }
+      #myCard {
+        position: relative;
+        display: inline-block;
+        width: 100px;
+        height: 150px;
+        background-color: antiquewhite;
+        margin-right: 10px;
+      }
+      #computerCard {
+        display: inline-block;
+        position: absolute;
+        background-color: antiquewhite;
+        width: 100px;
+        height: 150px;
+      }
+      .cardNum {
+        display: inline-block;
+        position: relative;
+        width: 30px;
+        height: 30px;
+        margin: 10px 10px 10px 10px;
+        border-color: black;
+        background-color: blue;
+      }
+      #addC {
+        position: relative;
+        width: 100px;
+        height: 30px;
+      }
+      #choice {
+        margin-left: 10px;
+        position: relative;
+        width: 100px;
+        height: 30px;
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <span id="myCardName">내 카드</span
+      ><span id="computerCardName">상대방 카드 </span>
+    </div>
+    <div id="cards">
+      <span id="myCard"> </span>
+      <span id="computerCard"> </span>
+      <div>
+        <button id="addC">카드 뽑기</button>
+        <button id="choice">누르기</button>
+      </div>
+    </div>
+    <script>
+      //카드 생성시간, 정답버튼 누른 시간, 전체 카드 개수, 컴퓨터 카드 생성 시간 변수 설정
+      let newDate;
+      let myDate;
+      let total;
+      let delay;
+      //플레이어와 컴퓨터의 카드 랜덤으로 생성하는 함수
+      function addCard() {
+        //처음 카드를 뽑는 게 아닌 경우(랜덤으로 카드를 생성하기 이전 카드가 남아있는 경우) 이전 카드를 지움
+        if (document.getElementsByClassName("cardNum").length !== 0) {
+          //플레이어와 컴퓨터의 카드 개수를 각각 나누어서 따로 지움
+          let mylength = document
+            .getElementById("myCard")
+            .getElementsByClassName("cardNum").length;
+          for (let k = 0; k < mylength; k++) {
+            //for 문이 돌아가면서 mylength가 계속 줄어들기 때문에 [length]로 하면 마지막 카드가 지워지지 않음.
+            //따라서 처음 카드를 계속 지워나가면 다 없어지게 됨
+            let pastCards = document
+              .getElementById("myCard")
+              .getElementsByClassName("cardNum")[0];
+            document.getElementById("myCard").removeChild(pastCards);
+          }
+
+          let comlength = document
+            .getElementById("computerCard")
+            .getElementsByClassName("cardNum").length;
+          for (let j = 0; j < comlength; j++) {
+            let pastCCards = document
+              .getElementById("computerCard")
+              .getElementsByClassName("cardNum")[0];
+            document.getElementById("computerCard").removeChild(pastCCards);
+          }
+        }
+        //카드 개수,컴퓨터가 카드를 내는 시간을 랜덤으로 생성
+        let myNum = Math.floor(Math.random() * 5 + 1);
+        let computerNum = Math.floor(Math.random() * 5 + 1);
+        let comturn = Math.floor(Math.random() * 2000);
+        delay = comturn;
+        total = myNum + computerNum;
+        //플레이어가 카드를 낸 시각을 측정함(정답을 맞추기까지의 시간을 재기 위해)
+
+        newDate = new Date();
+
+        //for문을 통해서 랜덤으로 생성된 카드 개수만큼 append 생성
+        for (let i = 0; i < myNum; i++) {
+          let putCards = document.createElement("span");
+          putCards.className = "cardNum";
+
+          document.getElementById("myCard").append(putCards);
+        }
+        //컴퓨터가 카드 내는 시간을 위에서 생성된 시간만큼 delay시킴
+        setTimeout(() => {
+          for (let k = 0; k < computerNum; k++) {
+            let putCards = document.createElement("span");
+            putCards.className = "cardNum";
+
+            document.getElementById("computerCard").append(putCards);
+          }
+        }, comturn);
+      }
+
+      function choiceCard() {
+        //컴퓨터가 카드를 내는 시간은 빼야 실제로 반응속도가 나오므로 delay만큼을 뺌
+        if (total === 5) {
+          //사용자가 '누르기' 버튼을 클릭한 시각 측정
+          myDate = new Date();
+          //컴퓨터가 카드를 내기 전에 버튼을 클릭하였다면 경고창 생성
+          if (myDate - newDate - delay < 0) {
+            alert(`상대방이 카드를 낸 이후에 클릭해야 합니다`);
+            //컴퓨터가 카드를 낸 이후에 버튼을 클릭하였다면 시간을 측정하여 경고창 생성
+          } else {
+            alert(`${(myDate - newDate - delay) / 1000}초 만에 맞추셨습니다!`);
+          }
+        } else {
+          //사용자가 '누르기' 버튼을 클릭한 시각 측정
+          myDate = new Date();
+          //컴퓨터가 카드를 내기 전에 버튼을 클릭하였다면 경고창 생성
+          if (myDate - newDate - delay < 0) {
+            //컴퓨터가 카드를 낸 이후에 버튼을 클릭하였다면 시간을 측정하여 경고창 생성
+            alert(`상대방이 카드를 낸 이후에 클릭해야 합니다`);
+          } else {
+            alert("틀렸습니다!");
+          }
+        }
+      }
+
+      document.getElementById("addC").addEventListener("click", addCard);
+      document.getElementById("choice").addEventListener("click", choiceCard);
+    </script>
+  </body>
+</html>
