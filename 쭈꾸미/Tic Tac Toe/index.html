@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Tic Tac Toe</title>
+  </head>
+  <body>
+    <div></div>
+    <script>
+      const { body } = document;
+      let turn = "O";
+      const data = [];
+      const $table = document.createElement("result");
+      const $result = document.createElement("div");
+
+      for (let i = 0; i < 3; i++) {
+        const $tr = document.createElement("tr");
+        for (let j = 0; j < 3; j++) {
+          const $td = document.createElement("td"); //변수로 빼놓아야 나중에 재사용이 쉬워짐
+          $td.addEventListener("click", (e) => {
+            //칸에 이미 글자가 있으면 무효
+            if (e.target.textContent) return;
+
+            e.target.textContent = turn;
+            //턴 넘기기
+            if (turn === "O") {
+              turn = "X";
+            } else if (turn === "X") {
+              turn = "O";
+            }
+          });
+          $tr.append($td);
+        }
+        $table.append($tr);
+      }
+      document.body.append($table);
+      document.body.append($result);
+    </script>
+  </body>
+</html>

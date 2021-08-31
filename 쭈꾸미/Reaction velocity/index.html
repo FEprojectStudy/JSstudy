@@ -68,7 +68,7 @@
           const average = record.reduce((a, c) => a + c) / record.length;
           $result.textContent = `현재:${
             endTime - startTime
-          }ms, 평균:${average}ms`; //미래-현재
+          }ms, 평균:${Math.floor(average)}ms`; //미래-현재
           startTime = null;
           endTime = null; //예전 값 방지
           $screen.classList.replace("now", "waiting");
