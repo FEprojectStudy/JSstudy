@@ -61,6 +61,7 @@ const winOrDraw = (target) => {
   const win = checkWinner(target);
   if (win) {
     $result.textContent = `${turn} Wins`;
+    $table.removeEventListener('click', shiftOX);
     return;
   }
   // 하나도 빠짐없이 조건을 충족할 경우 true != some(하나라도 충족)과 반대
@@ -79,9 +80,13 @@ const winOrDraw = (target) => {
  *
  */
 
+let clickable = true;
 // 각 칸을 클릭 이벤트 발생 시
 const shiftOX = (event) => {
   // 클릭한 칸이 차 있다면 (removeEventlistener를 사용하면 실수 확률 => 조건으로 처리)
+  if (!clickable) {
+    return;
+  }
   if (event.target.textContent !== '') {
     return;
   }
@@ -97,8 +102,12 @@ const shiftOX = (event) => {
     const emptyCells = rows.flat().filter((v) => !v.textContent);
     const randomCell =
       emptyCells[Math.floor(Math.random() * emptyCells.length)];
-    randomCell.textContent = 'X';
-    winOrDraw(event.target);
+    clickable = false;
+    setTimeout(() => {
+      randomCell.textContent = 'X';
+      winOrDraw(event.target);
+      clickable = true;
+    }, 500);
   }
 };
 
