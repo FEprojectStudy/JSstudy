@@ -10,7 +10,6 @@
   <body>
     <div></div>
     <script>
-  
       const { body } = document;
       //createElemnet는 구조분해 할당하면 안돌아감 ㅠ
       let turn = "O";
@@ -20,93 +19,106 @@
 
       const callback = (e) => {
         //주의: scope에 따라 변수 분리되는 것 생각하기 ex)$td,$tr
-        if (e.target.textContent !== ''){ // 빈칸이 아님
+        if (e.target.textContent !== "") {
+          // 빈칸이 아님
           return;
-        } else { //빈칸이면 표시 후 턴넘기기
-            e.target.textContent = turn;
-            //승자 판별
-            if(checkWinner(event.target)){
-              $result.textContent = `${turn}님이 승리!`;
-              $table.removeEventListener('click',callback); 
-            }
-            //무승부 판별
+        } else {
+          //빈칸이면 표시 후 턴넘기기
+          e.target.textContent = turn;
+          //승자 판별
+          if (checkWinner(event.target)) {
+            $result.textContent = `${turn}님이 승리!`;
+            $table.removeEventListener("click", callback);
+          }
+          //무승부 판별
 
-            if(checkDraw() === true){
-              $result.textContent = "무승부 입니다.";
-            }
+          if (checkDraw() === true) {
+            $result.textContent = "무승부 입니다.";
+          }
 
-            turn = (turn === 'X' ? 'O' : 'X'); 
+          turn = turn === "X" ? "O" : "X";
         }
       };
 
       const checkDraw = () => {
         let isDraw = true;
 
-        rows.forEach((row) => {
-          row.forEach((cell) => {
-            if(!cell.textContent){
-              isDraw = false;
-            }
-          });
-        });
-        return isDraw;
-      }
+        console.log(rows.flat().every((cell) => cell.textContent));
 
+        if (!rows.flat().every((cell) => cell.textContent)) isDraw = false;
+        // rows.forEach((row) => {
+        //   row.forEach((cell) => {
+        //     if (!cell.textContent) {
+        //       isDraw = false;
+        //     }
+        //   });
+        // });
+        return isDraw;
+      };
 
       const checkWinner = (target) => {
-        let rowIndex;
-        let cellIndex;
-        //내가 클릭한 td 찾아내기
-        rows.forEach((row,ri) => {
+        let rowIndex = target.parentNode.rowIndex; //부모태그 target 가져오기
+        let cellIndex = target.cellIndex;
+
+        // let rowIndex;
+        // let cellIndex;
+
+        console.log(rowIndex, cellIndex);
+
+        // 내가 클릭한 td 찾아내기
+        rows.forEach((row, ri) => {
           row.forEach((cell, ci) => {
-            if(cell === target){
+            if (cell === target) {
               rowIndex = ri;
               cellIndex = ci;
             }
           });
         });
+
         //세칸 다 채워졌나? //승자가 있는가
         let hasWinner = false;
         //가로줄 검사
-        if(
+        if (
           rows[rowIndex][0].textContent === turn &&
           rows[rowIndex][1].textContent === turn &&
           rows[rowIndex][2].textContent === turn
-        ){
+        ) {
           hasWinner = true;
         }
         //세로줄 검사
-        if(
+        if (
           rows[0][cellIndex].textContent === turn &&
           rows[1][cellIndex].textContent === turn &&
           rows[2][cellIndex].textContent === turn
-        ){
+        ) {
           hasWinner = true;
         }
         //대각선 검사 왼쪽 -> 오른쪽
-        if(
+        if (
           rows[0][0].textContent === turn &&
           rows[1][1].textContent === turn &&
           rows[2][2].textContent === turn
-        ){
+        ) {
           hasWinner = true;
         }
         //대각선 검사 오른쪽 -> 왼쪽
-        if(
+        if (
           rows[0][2].textContent === turn &&
           rows[1][1].textContent === turn &&
           rows[2][0].textContent === turn
-        ){
+        ) {
           hasWinner = true;
         }
 
         return hasWinner;
-      }
+      };
 
-      for (let i = 0; i < 3; i++) { //행
+      for (let i = 0; i < 3; i++) {
+        //행
         const $tr = document.createElement("tr");
         const cells = [];
-        for (let j = 0; j < 3; j++) { //열
+        for (let j = 0; j < 3; j++) {
+          //열
           const $td = document.createElement("td"); //변수로 빼놓아야 나중에 재사용이 쉬워짐
           cells.push($td);
           $tr.append($td);
@@ -114,7 +126,7 @@
         $table.append($tr);
         rows.push(cells);
       }
-      $table.addEventListener('click',callback);
+      $table.addEventListener("click", callback);
       document.body.append($table);
       document.body.append($result);
       console.log(rows);
