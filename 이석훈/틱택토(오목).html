@@ -19,6 +19,7 @@
   </head>
   <body>
     <script>
+      //오목 판, 현재 플레이어, 승리시 플레이어와 금지된 곳에 놓을 때 텍스트를 띄울 변수 생성
       const $table = document.createElement("table");
       const { body } = document;
       let thisTurn = "O";
@@ -27,6 +28,7 @@
       nowPlayer.textContent = `현재 플레이어 : ${thisTurn}`;
       let winner = document.createElement("div");
       let allArr = 0;
+      //8x8 배열로 오목판을 만들고 id를 생성
       for (let i = 1; i <= 8; i++) {
         const $tr = document.createElement("tr");
         const line = [];
@@ -42,12 +44,13 @@
       body.appendChild($table);
       body.appendChild(nowPlayer);
       $table.addEventListener("click", boxClick);
-
+      //클릭 시 textContent가 존재 시(이미 놓은 자리인 경우) text 띄움
       function boxClick() {
         if (event.target.textContent) {
           body.appendChild(forbidden);
           forbidden.textContent = "그 자리에는 놓을 수 없습니다";
         } else {
+          //5개가 연속으로 이어지는지를 파악하기 위해, 현재 놓은 자리에서 8개의 방향을 설정함.
           allArr += 1;
           forbidden.textContent = "";
           event.target.textContent = thisTurn;
@@ -82,12 +85,15 @@
           console.log(allArr);
           for (let i = 0; i < 8; i++) {
             thisNum = Number(event.target.id);
+            //특정 방향에서 현재 플레이어의 모양과 일치한다면(같은 모양이 연속으로 이어진다면)
+            //winArr에 push해놓고
             if (
               document.getElementById(direction[i]) &&
               document.getElementById(direction[i]).textContent === thisTurn
             ) {
               winArr.push(direction[i]);
               thisNum = direction[i];
+              //그 방향으로 쭉 탐색함. 만약에 5개가 연속으로 이어지기 전에 같지 않다면 탐색을 멈춤 
               for (let p = 0; p < 8; p++) {
                 thisNum = thisNum + direction[8 + i];
 
@@ -104,10 +110,11 @@
                   winArr = [];
                   break;
                 }
-
+                //연속으로 4개가 이어진 자리에 하나를 더 넣으면 5개이므로, 이겼습니다 text 넣음
                 if (winArr.length === 4) {
                   body.appendChild(winner);
                   winner.textContent = `${thisTurn}이(가) 이겼습니다!`;
+                  //모든 칸이 다 차있고 연속으로 5개가 이어지지 않는다면, 비겼습니다 text 넣음
                 } else if (allArr === 64) {
                   body.appendChild(winner);
                   winner.textContent = `비겼습니다!`;
@@ -115,6 +122,7 @@
               }
             }
           }
+          //매 턴마다 모양 
           thisTurn = thisTurn === "O" ? "X" : "O";
           nowPlayer.textContent = `현재 플레이어 : ${thisTurn}`;
         }
