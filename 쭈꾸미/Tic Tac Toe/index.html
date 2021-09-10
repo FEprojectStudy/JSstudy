@@ -26,7 +26,7 @@
           //빈칸이면 표시 후 턴넘기기
           e.target.textContent = turn;
           //승자 판별
-          if (checkWinner(event.target)) {
+          if (checkWinner(e.)) {
             $result.textContent = `${turn}님이 승리!`;
             $table.removeEventListener("click", callback);
           }
@@ -59,10 +59,8 @@
       const checkWinner = (target) => {
         let rowIndex = target.parentNode.rowIndex; //부모태그 target 가져오기
         let cellIndex = target.cellIndex;
-
         // let rowIndex;
         // let cellIndex;
-
         console.log(rowIndex, cellIndex);
 
         // 내가 클릭한 td 찾아내기
