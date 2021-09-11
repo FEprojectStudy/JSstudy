@@ -125,7 +125,12 @@ class Game{
         const { hero, monster } = this;
         hero.hp = Math.min(hero.maxHp, hero.hp + 20);
         monster.attack(hero);
-        this.showMessage('체력을 조금 회복했다!');
+        if (hero.hp <= 0) {
+            this.showMessage(`${hero.lev} 레벨에서 사망.`);
+            this.quit();
+            return
+        }
+        this.showMessage(`체력을 조금 회복했다! 회복하는 동안 공격을 받았다. `);
         this.updateHeroStat();
     }
     
