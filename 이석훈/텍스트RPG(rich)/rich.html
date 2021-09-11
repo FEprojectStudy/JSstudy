@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>부자되기</title>
+    <style>
+      span {
+        font-weight: 900;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 처음 화면 -->
+    <div id="firstScreen">
+      <div>부자되기</div>
+      <form id="nameInput">
+        <div>이름을 입력해주세요</div>
+        <input type="text" id="userName" />
+        <button id="nameInputBtn">확인</button>
+      </form>
+    </div>
+    <!-- 메인 화면 -->
+    <div id="main">
+      <div>메인화면</div>
+      <button id="work">아르바이트</button>
+      <button id="eat">밥먹기</button>
+      <button id="sleep">취침</button>
+    </div>
+    <button id="backtoMain">메인화면으로</button>
+    <button id="levelUp">레벨업</button>
+
+    <!-- 아르바이트 -->
+    <div id="workMain">
+      <div>&lt;아르바이트&gt;</div>
+      <br />
+      <div>
+        설명<br />
+        (Lv 1 이상) 편의점 : 체력 -1 / 정신력 -1 / 잔액 +10 <br />
+        (Lv 3 이상) 식당 : 체력 -10 / 정신력 -10 / 잔액 +100 <br />
+        (Lv 5 이상) 학원 : 체력 -50 / 정신력 -50 / 잔액 +500 <br />
+      </div>
+
+      <button id="workOne">편의점</button>
+      <button id="workTwo">식당</button>
+      <button id="workThree">학원</button>
+    </div>
+    <!-- 밥먹기 -->
+    <div id="eatMain">
+      <div>&lt;밥먹기&gt;</div>
+      <br />
+      <div>
+        설명<br />
+        (Lv 1 이상) 컵라면 : 체력 +1 / 잔액 -1 <br />
+        (Lv 3 이상) 국밥 : 체력 +10 / 잔액 -10 <br />
+        (Lv 5 이상) 소고기 : 체력 +50 / 잔액 -50 <br />
+      </div>
+
+      <button id="eatOne">컵라면</button>
+      <button id="eatTwo">국밥</button>
+      <button id="eatThree">소고기</button>
+    </div>
+
+    <!-- 취침 -->
+    <div id="sleepMain">
+      <div>&lt;취침&gt;</div>
+      <br />
+      <div>
+        설명<br />
+        (Lv 1 이상) 돗자리 : 정신력 +1 / 잔액 -1 <br />
+        (Lv 3 이상) 이불 : 정신력 +10 / 잔액 -10 <br />
+        (Lv 5 이상) 호텔 : 정신력 +50 / 잔액 -50 <br />
+      </div>
+
+      <button id="sleepOne">돗자리</button>
+      <button id="sleepTwo">이불</button>
+      <button id="sleepThree">호텔</button>
+    </div>
+
+    <!-- 캐릭터 상태 표시 -->
+    <div id="playerState">
+      <div>
+        플레이어 이름 :
+        <span id="playerName"></span>
+      </div>
+
+      <div>
+        현재 체력 :<span id="nowHp"></span>&nbsp(최대 체력 :&nbsp<span
+          id="maxHp"
+        ></span
+        >)
+      </div>
+
+      <div>
+        현재 정신력 : <span id="nowMp"></span>&nbsp(최대 정신력 :&nbsp<span
+          id="maxMp"
+        ></span
+        >)
+      </div>
+
+      <div>현재 잔액 : <span id="nowMoney"></span></div>
+
+      <div>레벨 : <span id="nowLevel"></span></div>
+      <div>레벨업 필요금액 : <span id="levelCost"></span></div>
+      <div id="notAllowed"></div>
+    </div>
+  </body>
+  <script>
+    //플레이어 state
+    let $playerName;
+    let $nowHp = 100;
+    let $nowMp = 100;
+    let $maxHp = 100;
+    let $maxMp = 100;
+    let $nowMoney = 100;
+    let $nowLevel = 1;
+    let $levelCost = $nowLevel * 10;
+
+    //장소
+
+    let place = [
+      ["firstScreen", 0],
+      ["playerState", 1],
+      ["backtoMain", 2],
+      ["main", 3],
+      ["workMain", 4],
+      ["eatMain", 5],
+      ["sleepMain", 6],
+      ["levelUp", 7],
+    ];
+    //값이 표시되도록 설정
+    document.getElementById("nowHp").textContent = $nowHp;
+    document.getElementById("nowMp").textContent = $nowMp;
+    document.getElementById("nowMoney").textContent = $nowMoney;
+    document.getElementById("nowLevel").textContent = $nowLevel;
+    document.getElementById("levelCost").textContent = $levelCost;
+    document.getElementById("maxHp").textContent = $maxHp;
+    document.getElementById("maxMp").textContent = $maxMp;
+    console.log(document);
+    function placeNow(thisPlace) {
+      //현재 위치에 따라 보이기 또는 숨기기
+      for (let i = 0; i < place.length; i++) {
+        if (thisPlace !== 0 && thisPlace !== 3) {
+          document.getElementById(place[2][0]).style.display = "";
+        }
+        if (place[i][1] !== thisPlace) {
+          document.getElementById(place[i][0]).style.display = "none";
+        } else if (place[i][1] === thisPlace) {
+          document.getElementById(place[i][0]).style.display = "";
+        }
+        if (thisPlace !== 0) {
+          document.getElementById(place[1][0]).style.display = "";
+          document.getElementById(place[7][0]).style.display = "";
+        }
+      }
+      //값이 표시되도록 설정
+      document.getElementById("nowHp").textContent = $nowHp;
+      document.getElementById("nowMp").textContent = $nowMp;
+      document.getElementById("nowMoney").textContent = $nowMoney;
+      document.getElementById("nowLevel").textContent = $nowLevel;
+      document.getElementById("levelCost").textContent = $levelCost;
+      document.getElementById("maxHp").textContent = $maxHp;
+      document.getElementById("maxMp").textContent = $maxMp;
+    }
+    //첫 화면 시작
+    placeNow(0);
+
+    document.getElementById("nameInput").addEventListener("submit", (event) => {
+      //화면이 초기화되지 않게 하기 위해
+      event.preventDefault();
+
+     //플레이어 이름 설정
+      $playerName = event.target["userName"].value;
+
+      let thisName = document.getElementById("userName").value;
+
+      document.getElementById("playerName").textContent = $playerName;
+      placeNow(3);
+    });
+    //각 장소로 이동하는 버튼의 이벤트 설정
+    document.getElementById("work").addEventListener("click", (event) => {
+      placeNow(4);
+    });
+    document.getElementById("eat").addEventListener("click", (event) => {
+      placeNow(5);
+    });
+    document.getElementById("sleep").addEventListener("click", (event) => {
+      placeNow(6);
+    });
+    document.getElementById("backtoMain").addEventListener("click", (event) => {
+      placeNow(3);
+    });
+    //각 버튼을 클릭했을 때의 변화값 설정
+    let eventElement = [
+      ["workOne", -1, -1, 10],
+      ["workTwo", -10, -10, 100],
+      ["workThree", -50, -50, 500],
+      ["eatOne", 1, 0, -1],
+      ["eatTwo", 10, 0, -10],
+      ["eatThree", 50, 0, -50],
+      ["sleepOne", 0, 1, -1],
+      ["sleepTwo", 0, 10, -10],
+      ["sleepThree", 0, 50, -50],
+    ];
+    //구입시 이벤트 설정
+    function buy(element) {
+      let thisEl;
+      $maxHp = $nowLevel * 100;
+      $maxMp = $nowLevel * 100;
+
+      for (let k = 0; k < eventElement.length; k++) {
+        if (eventElement[k][0] === element) {
+          thisEl = eventElement[k];
+        }
+      }
+      document.getElementById(thisEl[0]).addEventListener("click", (event) => {
+        if (
+          $nowHp + thisEl[1] < 0 ||
+          $nowMp + thisEl[2] < 0 ||
+          $nowMoney + thisEl[3] < 0
+        ) {
+          document.getElementById("notAllowed").textContent =
+            "체력, 정신력 또는 현금이 부족합니다";
+        } else if ($maxHp < $nowHp + thisEl[1] || $maxMp < $nowMp + thisEl[2]) {
+          document.getElementById("notAllowed").textContent =
+            "최대 체력(정신력)을 초과할 수 없습니다";
+        } else if (
+          (["workTwo", "eatTwo", "sleepTwo"].includes(element) &&
+            $nowLevel < 3) ||
+          (["workThree", "eatThree", "sleepThree"].includes(element) &&
+            $nowLevel < 5)
+        ) {
+          document.getElementById("notAllowed").textContent =
+            "레벨이 부족합니다";
+        } else {
+          $nowHp += thisEl[1];
+          $nowMp += thisEl[2];
+          $nowMoney += thisEl[3];
+          document.getElementById("notAllowed").textContent = "";
+        }
+    //값이 표시되도록 설정
+        document.getElementById("nowHp").textContent = $nowHp;
+        document.getElementById("nowMp").textContent = $nowMp;
+        document.getElementById("nowMoney").textContent = $nowMoney;
+        document.getElementById("nowLevel").textContent = $nowLevel;
+        document.getElementById("levelCost").textContent = $levelCost;
+        document.getElementById("maxHp").textContent = $maxHp;
+        document.getElementById("maxMp").textContent = $maxMp;
+      });
+    }
+    //구입 버튼에 기능 할당
+    buy("workOne");
+    buy("workTwo");
+    buy("workThree");
+    buy("eatOne");
+    buy("eatTwo");
+    buy("eatThree");
+    buy("sleepOne");
+    buy("sleepTwo");
+    buy("sleepThree");
+    //레벨업 설정
+    document.getElementById("levelUp").addEventListener("click", (event) => {
+      if ($nowMoney < $levelCost) {
+        document.getElementById("notAllowed").textContent =
+          "레벨업에 필요한 현금이 부족합니다";
+      } else {
+        $nowMoney -= $levelCost;
+        $nowLevel += 1;
+        $levelCost = $nowLevel * 10;
+        $maxHp = $nowLevel * 100;
+        $maxMp = $nowLevel * 100;
+        document.getElementById("notAllowed").textContent = "";
+        document.getElementById("nowHp").textContent = $nowHp;
+        document.getElementById("nowMp").textContent = $nowMp;
+        document.getElementById("nowMoney").textContent = $nowMoney;
+        document.getElementById("nowLevel").textContent = $nowLevel;
+        document.getElementById("levelCost").textContent = $levelCost;
+        document.getElementById("maxHp").textContent = $maxHp;
+        document.getElementById("maxMp").textContent = $maxMp;
+      }
+    });
+  </script>
+</html>
