@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="style.css" />
-    <title>텍스트 RPG</title>
+    <title>Text RPG</title>
   </head>
   <body>
     <div class="screen">
@@ -31,10 +31,20 @@
           <div class="menu recover">회복</div>
           <div class="menu escape">도망</div>
         </div>
+
+        
+        <div class="rest-screen game-menu" style="display: none">
+          <label>휴식 중...</label>
+        </div>
+
+        <div class="exit-screen game-menu" style="display: none">
+          <label>Game Over</label>
+        </div>
+
       </div>
 
-      <div class="#message"> 
-          <p>Log</p>
+      <div class="message-screen">
+        <div class="message"></div>
       </div>
 
       <div class="stat-screen">
@@ -51,6 +61,7 @@
 
             <div class="stat monster-stat">
                 <span id="monster-name"></span>
+                &nbsp;
                 <span id="monster-hp"></span>
                 <span id="monster-att"></span>
             </div>
@@ -58,6 +69,6 @@
       </div>
       <!-- style="display: none" -->
     </div>
-    <script src="./script.js"></script>
+    <script src="./script-class.js"></script>
   </body>
 </html>

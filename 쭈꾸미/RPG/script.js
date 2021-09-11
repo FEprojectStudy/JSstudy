@@ -25,6 +25,25 @@ const monsterList = [
     {name: '야도란', hp:200, att:60,xp:80},
 ];
 
+class Monster{
+    constructor(name, hp, att, xp){ //생성자
+        this.name = name;
+        this.hp = hp;
+        this.att = att;
+        this.xp = xp;
+    }
+
+    attack(monster){
+        monster.hp -= this.att;
+        this.hp -= monster.att;
+    }
+
+    heal(monster){
+        this.hp += 20;
+        this.hp -= monster.att;
+    }
+} 
+
 const $startScreen = document.querySelector('.start-screen');
 $startScreen.addEventListener('submit',(e)=>{
     e.preventDefault();

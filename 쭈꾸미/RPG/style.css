@@ -38,11 +38,14 @@ label {
   align-items: center;
 }
 
-.message {
+.message-screen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   text-align: center;
   border: 1px solid black;
   width: 798px;
-  height: 150px;
+  height: 100px;
 }
 
 .start-screen {
@@ -73,6 +76,10 @@ label {
 
 .menu:hover {
   background-color: #7dedff;
+}
+
+.rest-screen{
+  color:white;
 }
 
 .stat-screen {
