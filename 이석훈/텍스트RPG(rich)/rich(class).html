@@ -107,15 +107,13 @@
     </div>
   </body>
   <script>
-    //class의 구분?
-    //게임 내 실행창의 구분-클릭시의 이벤트도 따로 클래스로 분리해야할듯?, 표시창, 플레이어-서로 분리해보기
-    //clss이름뒤에 () 붙이면 안됨
+
+ 
     class GamePage {
-      //여기로 where이 어떤 인수가 들어올줄 알고?
+
       constructor(where) {
         //맨 처음 들어갈때는 메인페이지가 우선이므로
-        //이름을 어떤 방식으로 지어야 할지?
-        //함수 뒤에 ()을 쳐 줘야 하는 이유? return값이 아닌데?
+
         this.nowPage = "firstScreen";
         this.start();
         this.userName = null;
@@ -199,7 +197,7 @@
         this.maxMp = 100 * this.nowLevel;
 
         this.notAllowed;
-        //()을 쓸 때와 아닐때가 구분이 잘 안감 . return값을 내냐 아니냐로 알고 있는데?
+        //()을 쓸 때와 아닐때가 구분이 잘 안감
         this.buttons();
         this.showValue();
       }
