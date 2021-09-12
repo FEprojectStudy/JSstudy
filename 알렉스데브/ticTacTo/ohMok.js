@@ -7,6 +7,10 @@ let turn = 'O';
 const checkWinner = (target) => {
   const rowIdx = target.parentNode.rowIndex;
   const cellIdx = target.cellIndex;
+
+  console.log(rowIdx);
+  console.log(cellIdx);
+
   let isWinner = false;
   // 열 검사
   if (
@@ -73,6 +77,7 @@ const shiftOX = (event) => {
   if (event.target.textContent !== '') {
     return;
   }
+  event.target.style.backgroundColor = 'grey';
   event.target.textContent = turn;
   winOrDraw(event.target);
 
@@ -82,6 +87,7 @@ const shiftOX = (event) => {
       emptyCells[Math.floor(Math.random() * emptyCells.length)];
     clickable = false;
     setTimeout(() => {
+      randomCell.style.backgroundColor = 'grey';
       randomCell.textContent = 'X';
       winOrDraw(event.target);
       clickable = true;
