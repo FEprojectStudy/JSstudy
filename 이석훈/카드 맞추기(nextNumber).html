@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>nextNumber</title>
+    <style>
+      .cardLine {
+        width: 240px;
+        height: 60px;
+      }
+      span {
+        display: inline-block;
+        width: 58px;
+        height: 58px;
+        border: 1px solid black;
+      }
+      td {
+        width: 58px;
+        height: 58px;
+        background-color: skyblue;
+
+        text-align: center;
+
+      }
+    </style>
+  </head>
+  <body></body>
+  <script>
+    //카드가 펼쳐지는 동안에는 클릭이 되지 않도록 하기 위해 변수 설정
+    let clickable = false;
+//카드 생성 함수
+    function createCard() {
+      let shuffleNum = [];
+  //shuffleNum 배열에 16까지의 숫자를 랜덤하게 배정
+      while (shuffleNum.length !== 16) {
+        let randomNum = Math.floor(Math.random() * 16) + 1;
+        if (!shuffleNum.includes(randomNum)) {
+          shuffleNum.push(randomNum);
+        }
+      }
+//칸 생성
+      for (let i = 0; i < 4; i++) {
+        const newLine = document.createElement("div");
+        for (let k = 0; k < 4; k++) {
+          const newCard = document.createElement("td");
+          const cardBackground = document.createElement("span");
+          newLine.className = "cardLine";
+          newCard.textContent = shuffleNum.shift();
+  //처음 카드는 투명하게 하여 안의 숫자가 보이지 않게 함
+          newCard.style.opacity = 0;
+          newCard.id = `${i * 4 + k}`;
+          cardBackground.appendChild(newCard);
+          newLine.appendChild(cardBackground);
+          document.body.appendChild(newLine);
+        }
+      }
+    }
+
+    function fadeIn(element) {
+      let fadeAmount = 0;
+     //0.1초당 투명도를 조절하고, 완전히 다 채워지면 clearInterval을 실행함.
+      let fade = setInterval(() => {
+      
+        if (fadeAmount >= 1) {
+          clearInterval(fade);
+        }
+        fadeAmount += 0.1;
+        element.style.opacity = fadeAmount;
+      }, 100);
+    }
+
+    function fadeOut(element) {
+      let fadeoutAmount = 1;
+      let fadeo = setInterval(() => {
+        if (fadeoutAmount <= 0) {
+          clearInterval(fadeo);
+        }
+        fadeoutAmount -= 0.1;
+        element.style.opacity = fadeoutAmount;
+      }, 100);
+
+    }
+    let countAns = [];
+
+    createCard();
+//fadein 1초, fadeout을 3초 뒤에 실행하므로 총 5초동안은 click이 안되게 해야함(카드를 보여주는 시간이므로)
+    setTimeout(() => {
+      clickable = true;
+    }, 5000);
+  //fadein 1초, fadeout을 3초 뒤에 실행함
+    for (let i = 0; i < 16; i++) {
+      fadeIn(document.getElementById(`${i}`));
+
+      setTimeout(() => {
+        fadeOut(document.getElementById(`${i}`));
+      }, 3000);
+    }
+    document.body.addEventListener("click", (e) => clickEvent(e));
+
+    function clickEvent(e) {
+      if (
+        countAns.length === 15 &&
+        !countAns.includes(e.target.textContent) &&
+        clickable === true
+      ) {
+        //연타하면 16번이 계속 눌리는 버그가 있었음
+       
+        fadeIn(e.target);
+        clickable = false;
+
+        e.target.style.color = "black";
+        e.target.style.backgroundColor = "skyBlue";
+  //16개를 다 맞추면 카드가 다 펼쳐진 이후 실행되게 5초의 시간을 줌
+        setTimeout(() => {
+          alert("다 맞췄습니다!");
+          document.body.innerHTML = "";
+          countAns = [];
+
+          createCard();
+
+          setTimeout(() => {
+            clickable = true;
+          }, 5000);
+
+          for (let i = 0; i < 16; i++) {
+            fadeIn(document.getElementById(`${i}`));
+
+            setTimeout(() => {
+              fadeOut(document.getElementById(`${i}`));
+            }, 3000);
+          }
+        }, 1000);
+      } else if (
+        // clickable === true 일때만 누를 수 있도록 함
+        clickable === true &&
+        e.target.textContent !== "" &&
+        e.target !== document.body &&
+        //span을 클릭하면 안에 있는 td가 보이지 않으므로 클릭 자체가 되지 않도록 해야한다.
+        e.target.tagName !== "SPAN" &&
+        e.target.tagName !== "DIV" &&
+        //이미 누른 번호는 다시 누를 수 없도록 함
+        !countAns.includes(e.target.textContent)
+      ) {
+        e.target.style.color = "black";
+        e.target.style.backgroundColor = "skyBlue";
+        
+        fadeIn(e.target);
+        clickable = false;
+        //카드가 펼쳐지는 동안에는 클릭할 수 없음.
+        if (
+          e.target.textContent === "1" ||
+          (countAns.length >= 1 &&
+            Number(countAns[countAns.length - 1]) ===
+              Number(e.target.textContent) - 1)
+        ) {
+          countAns.push(e.target.textContent) &&
+            setTimeout(() => {
+              clickable = true;
+            }, 1000);
+        } else {
+          setTimeout(() => {
+            fadeOut(e.target);
+          }, 1000) &&
+            setTimeout(() => {
+              clickable = true;
+            }, 2000);
+        }
+      }
+    }
+  </script>
+</html>
