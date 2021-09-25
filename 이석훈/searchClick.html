@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+
+    <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+  </head>
+
+  <body>
+    <style>
+      body {
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+      #post {
+        display: inline-block;
+        width: 100px;
+        height: 130px;
+
+        margin: 10px 10px 10px 10px;
+      }
+
+      #postTitle {
+        display: inline-block;
+        width: 100px;
+        height: 100px;
+        background-color: sandybrown;
+
+        text-align: center;
+        font-size: 20px;
+      }
+      #postInfo {
+        /* display: inline-block; */
+        width: 100px;
+        height: 20px;
+
+        text-align: center;
+        font-size: 15px;
+      }
+      #divideBar {
+        font-style: oblique;
+        font-weight: bolder;
+      }
+    </style>
+    <div id="root"></div>
+    <script type="text/babel">
+      const postList = ["테크", "식품", "음악", "방송", "패션"];
+      const ads = ["은하수와 사과 합병!", "3초 집밥 키트", "모 걸그룹 디스전...", "유한도전 다시 시작?", "올 겨울은 드레스 패딩 유행 예상"];
+      const mouseTime = { 테크: 0, 식품: 0, 음악: 0, 방송: 0, 패션: 0 };
+      let mostViewed = -1;
+      let inTime = 0;
+      setInterval(() => {
+        let maxValue = -1;
+        let mostKey = -1;
+        for (const [key, value] of Object.entries(mouseTime)) {
+          if (value > maxValue) {
+            maxValue = value;
+            mostKey = key;
+          }
+        }
+
+        maxValue === 0 ? (mostViewed = -1) : (mostViewed = mostKey);
+      }, 800);
+
+      class Post extends React.Component {
+        constructor(props) {
+          super(props);
+
+          this.state = {
+            title: props.thisTitle,
+            index: props.thisIndex,
+
+            userClicked: 0,
+            onMouseTime: 0,
+          };
+        }
+
+        onClick = (e) => {
+          //괄호 표시해야함 ({userClicked: before.userClicked + 1,})
+          this.setState((before, now) => ({
+            userClicked: before.userClicked + 1,
+          }));
+          mouseTime[`${this.state.title}`] = this.state.userClicked + this.state.onMouseTime;
+        };
+
+        onMouseOver = (e) => {
+          inTime = new Date();
+        };
+        onMouseOut = (e) => {
+          let nowTime = new Date();
+
+          this.setState((before, after) => ({
+            onMouseTime: before.onMouseTime + (nowTime.getMinutes() - inTime.getMinutes()) * 60 + nowTime.getSeconds() - inTime.getSeconds(),
+          }));
+
+          setTimeout(() => {
+            mouseTime[`${this.state.title}`] = this.state.userClicked + this.state.onMouseTime;
+          }, 0);
+        };
+
+        render() {
+          return (
+            <React.Fragment>
+              <span id="post">
+                <span onMouseOver={this.onMouseOver} onMouseOut={this.onMouseOut} onClick={this.onClick} id="postTitle">
+                  {this.state.title}
+                </span>
+                <span id="postInfo">
+                  클릭횟수 : {this.state.userClicked}
+                  <br />
+                  체류시간 : {this.state.onMouseTime}
+                </span>
+              </span>
+            </React.Fragment>
+          );
+        }
+      }
+    </script>
+    <script type="text/babel">
+      ReactDOM.render(
+        <React.Fragment>
+          <div>
+            {postList.map((v, i) => (
+              <Post thisTitle={v} thisIndex={i} key={i} />
+            ))}
+          </div>
+          <div>사용자 선호도 분석</div>
+        </React.Fragment>,
+        document.querySelector("#root")
+      );
+    </script>
+
+    <div id="analysis"></div>
+    <script type="text/babel">
+      class Analysis extends React.Component {
+        constructor(props) {
+          super(props);
+
+          this.state = {
+            name: "미정",
+            nowAds: "",
+          };
+        }
+
+        componentDidMount() {
+          this.interval = setInterval(
+            () => this.setState((state) => ({ name: mostViewed === -1 ? "미정" : mostViewed, nowAds: mostViewed === -1 ? "아직 데이터가 없습니다" : ads[postList.indexOf(mostViewed)] })),
+            1000
+          );
+        }
+        componentWillUnmount() {
+          clearInterval(this.interval);
+        }
+
+        render() {
+          return (
+            <React.Fragment>
+              <div>{this.state.name}</div>
+              <div id="divideBar">추천 광고</div>
+              <div>{this.state.nowAds}</div>
+            </React.Fragment>
+          );
+        }
+      }
+    </script>
+
+    <script type="text/babel">
+      ReactDOM.render(
+        <React.Fragment>
+          <Analysis info={mostViewed} />
+        </React.Fragment>,
+        document.querySelector("#analysis")
+      );
+    </script>
+  </body>
+</html>
