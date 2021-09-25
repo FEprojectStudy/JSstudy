@@ -62,7 +62,10 @@
           return (
             <React-Fragment>
               <h1>TripLog : 오늘의 추천 여행지</h1>
-              <div></div>
+              <div id="countryName">
+                <img src={photoList.id} alt={countryList.id} />
+                <p id="comment">{comment}</p>
+              </div>
             </React-Fragment>
           );
         };
