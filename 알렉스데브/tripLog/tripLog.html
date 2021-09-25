@@ -48,11 +48,13 @@
         const hitCount = { Korea: 0, Mongolia: 0, Norway: 0, Japan: 0 };
 
         const TripLog = () => {
-          const [country, setCountry] = React.useState(countryList);
-          const [photo, setPhoto] = React.useState(photoList);
-          const [comment, setComment] = React.useState(commentList);
+          const [country, setCountry] = React.useState(null);
+          const [photo, setPhoto] = React.useState(null);
+          const [comment, setComment] = React.useState(null);
 
-          const onMouseOn = () => {};
+          React.useEffect(() => {
+            setCountry(countryList);
+          }, []);
 
           const onClick = () => {
             setComment();
