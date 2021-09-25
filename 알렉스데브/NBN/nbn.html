@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Nine By Nine</title>
+    <script
+      crossorigin
+      src="https://unpkg.com/react@16/umd/react.development.js"
+    ></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"
+    ></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="text/babel">
+      // functional component (함수형으로 state를 만드는 법)
+      // Hooks : 함수형 방식으로, 기존은 class 보다 코드가 간결하고 최근 선호하는 추세이다.
+      const NBN = () => {
+        // destructuring, 배열 마지막 값인 set~매개변수는 앞의 값 전용 setState이다. 초기 값을 useState 메서드의 인자로 넣어준다.
+        // 아래의 state 관련 함수는 반드시 컴포넌트 안에 위치해야 한다.
+        const [first, setFirst] = React.useState(Math.ceil(Math.random() * 9));
+        const [second, setSecond] = React.useState(
+          Math.ceil(Math.random() * 9)
+        );
+        const [value, setValue] = React.useState("");
+        const [result, setResult] = React.useState("");
+        // React.useRef 이렇게 하여 DOM에 접근
+        const inputRef = React.useRef(null);
+
+        const onChangeInput = (e) => {
+          setValue(e.target.value);
+        };
+
+        const onSubmitForm = (e) => {
+          e.preventDefault();
+          inputRef.current.focus();
+          if (parseInt(value) === first * second) {
+            setResult(`정답: ${value}`);
+            setFirst(Math.ceil(Math.random() * 9));
+            setSecond(Math.ceil(Math.random() * 9));
+            setValue("");
+          } else {
+            setResult("땡");
+            setValue("");
+          }
+        };
+
+        return (
+          <React.Fragment>
+            <h1>Nine By Nine with React</h1>
+            <div className="question">
+              {first} 곱하기 {second}는?
+            </div>
+            <div className="type-input">
+              <form onSubmit={onSubmitForm}>
+                <input
+                  ref={inputRef}
+                  onChange={onChangeInput}
+                  value={value}
+                ></input>
+                <button>입력!</button>
+              </form>
+            </div>
+            <div id="result">{result}</div>
+          </React.Fragment>
+        );
+      };
+    </script>
+    <script type="text/babel">
+      // 컴포넌트를 복수로 양산, 그러나 각각의 컴포넌트는 독립적으로 존재한다.
+      ReactDOM.render(<NBN />, document.querySelector("#root"));
+    </script>
+  </body>
+</html>

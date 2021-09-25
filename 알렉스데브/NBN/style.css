@@ -1,0 +1,32 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  margin: 40px 0 40px 0;
+  text-align: center;
+}
+
+.question {
+  font-size: large;
+  font-weight: bold;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  width: 30%;
+  text-align: center;
+}
+
+form {
+  width: 40%;
+  align-items: center;
+  margin-left: 40%;
+  margin-right: 70%;
+  padding: 0;
+}
+
+input {
+  margin: auto;
+}
