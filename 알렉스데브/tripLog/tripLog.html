@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>tripLog</title>
+    <script
+      crossorigin
+      src="https://unpkg.com/react@16/umd/react.development.js"
+    ></script>
+    <script
+      crossorigin
+      src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"
+    ></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+  </head>
+  <body>
+    <div id="root">
+      <script type="text/babel">
+        const commentList = [
+          {
+            id: 1,
+            value: "Korea: Experience the Home of K-pop, vibrant parties life",
+          },
+          {
+            id: 2,
+            value: "Mongol: Enjoy the clear celestial on the open green",
+          },
+          {
+            id: 3,
+            value: "Norway: Stand Between giant glassy pillars of the earth",
+          },
+          { id: 4, value: "Japan: All about tradition, food, and sub culture" },
+        ];
+        const countryList = [
+          { id: 1, value: "South Korea" },
+          { id: 2, value: "Mongolia" },
+          { id: 3, value: "Norway" },
+          { id: 4, value: "Japan" },
+        ];
+        const photoList = [
+          "img/korea.jpg",
+          "img/mongolia.jpg",
+          "img/norway.jpg",
+          "img/japan.jpg",
+        ];
+        const hitCount = { Korea: 0, Mongolia: 0, Norway: 0, Japan: 0 };
+
+        const TripLog = () => {
+          const [country, setCountry] = React.useState(countryList);
+          const [photo, setPhoto] = React.useState(photoList);
+          const [comment, setComment] = React.useState(commentList);
+
+          const onMouseOn = () => {};
+
+          const onClick = () => {
+            setComment();
+          };
+          return (
+            <React-Fragment>
+              <h1>TripLog : 오늘의 추천 여행지</h1>
+              <div></div>
+            </React-Fragment>
+          );
+        };
+      </script>
+    </div>
+    <script type="text/babel">
+      ReactDOM.render(<TripLog />, document.querySelector("#root"));
+    </script>
+  </body>
+</html>
